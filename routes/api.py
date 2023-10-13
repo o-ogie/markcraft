@@ -11,7 +11,10 @@ load_dotenv()
 api_bp = Blueprint("api", __name__)
 bcrypt = Bcrypt()
 SECRET = os.getenv("SECRET")
-client = MongoClient(os.getenv("LOCALDB"), 27017)
+DB_USER = os.getenv("DBUSER")
+DB_PW = os.getenv("DBPW")
+connect = f'mongodb://{DB_USER}:{DB_PW}@localhost'
+client = MongoClient(f'{connect}', 27017)
 db = client.markcraft
 collection = db["users"]
 collection.create_index([("email", 1)], unique=True)
